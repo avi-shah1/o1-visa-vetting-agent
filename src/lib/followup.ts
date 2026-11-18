@@ -1,5 +1,5 @@
 /**
- * Follow-up resolution (spec PART 2c): the applicant answers one open
+ * Follow-up resolution: the applicant answers one open
  * discrepancy, the resolver agent classifies the answer, and we update the
  * discrepancy, the claim and the finding in one transaction.
  */
@@ -52,7 +52,7 @@ export type FollowupResult = {
   reframedCriterion: Criterion | null;
   newSources: Source[];
   remainingOpen: number;
-  /** PART 3: set when this was a sceptic question; the caller runs recheckHypothesis() in the background. */
+  /** Set when this was a sceptic question; the caller runs recheckHypothesis() in the background. */
   recheck: { hypothesisId: string } | null;
 };
 

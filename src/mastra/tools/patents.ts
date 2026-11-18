@@ -1,7 +1,7 @@
 /**
- * PART 3: forward citations of a patent (how many later patents cite it), from
- * the public Google Patents page. No key needed. The spec suggests PatentsView
- * or Lens.org; Google Patents gives the same count plus the citing patents'
+ * Investigate mode: forward citations of a patent (how many later patents cite it), from
+ * the public Google Patents page. No key needed. Chosen over PatentsView
+ * or Lens.org: Google Patents gives the same count plus the citing patents'
  * assignees, which also helps judge licensing/adoption, and needs no key.
  *
  * Benchmark: years since grant (zero citations a year after grant means little;

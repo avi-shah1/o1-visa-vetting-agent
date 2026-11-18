@@ -24,7 +24,7 @@ export async function POST(request: Request, ctx: RouteContext<"/api/cases/[id]/
 
   try {
     const result: FollowupResponse = await resolveDiscrepancy({ applicantId: id, ...parsed.data });
-    // PART 3: a sceptic question's answer re-checks its hypothesis (re-investigating if new links were given).
+    // A sceptic question's answer re-checks its hypothesis (re-investigating if new links were given).
     if (result.recheck) {
       const { hypothesisId } = result.recheck;
       after(() =>

@@ -1,5 +1,5 @@
 /**
- * PART 3 investigate mode for the source agents (PART3_INVESTIGATION_SPEC.md §3).
+ * Investigate mode for the source agents.
  *
  * Same five agents, same identity rules. Only the job changes: instead of
  * "is this claim true?", each agent gets sceptic Hypotheses and MEASURES the
@@ -16,7 +16,7 @@ import type { HypothesisCheck, HypothesisMetric, InvestigatorId, SourceAgentId }
 import { exaContents, exaSearch, npmDownloads, openAlexWork, patentCitations, pypiDownloads } from "../tools";
 import { SOURCE_AGENT_MODEL } from "./source-agents";
 
-/** Which checks each investigator handles (spec §3 table). `wages` is code only. */
+/** Which checks each investigator handles. `wages` is code only. */
 export const CHECKS_BY_AGENT: Record<InvestigatorId, (check: HypothesisCheck, criterion: string) => boolean> = {
   scholar: (c) => c.metric === "paper_citations" || c.metric === "paper_field_normalised_impact",
   github: (c) => c.metric === "repo_adoption" || c.metric === "package_downloads",
@@ -30,7 +30,7 @@ export const CHECKS_BY_AGENT: Record<InvestigatorId, (check: HypothesisCheck, cr
   wages: (c) => c.metric === "salary_vs_benchmark",
 };
 
-/** Budgets (spec §8). */
+/** Budgets and limits for investigate mode. */
 export const INVESTIGATE_LIMITS = {
   maxToolCallsPerCheck: 6,
   concurrencyPerAgent: 4,
@@ -105,7 +105,7 @@ export function investigateSetup(agentId: SourceAgentId, agentName: string): { i
   };
 }
 
-/** New in PART 3: measures patent impact (forward citations, licences, products). */
+/** Investigate mode only: measures patent impact (forward citations, licences, products). */
 export const patentsAgent = new Agent({
   id: "patents",
   name: "Patents research agent",

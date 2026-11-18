@@ -6,7 +6,7 @@
  * not go in this public repo). GET /api/demo-applicant serves that file when it
  * exists and falls back to this placeholder otherwise.
  *
- * The profile is built around the spec's three scripted discrepancies:
+ * The profile is built around three scripted discrepancies:
  *  1. Membership — claims "Thiel Fellow"; truth: finalist only
  *     → agent flags `contradicted` → applicant amends.
  *  2. Scholarly — claims 10 citations (Google Scholar); OpenAlex shows fewer,
@@ -29,7 +29,7 @@ export const DEMO_SUBMISSION: ApplicationSubmission = {
     currentOrganization: "Fieldnote AI",
     usWorkPlan:
       "Lead the engineering team at Fieldnote AI in San Francisco, building document-understanding models used by immigration and corporate law firms.",
-    // Replace with the teammate's real profile URLs so the source agents have somewhere to look.
+    // Fictional person, so no profile links (the real demo applicant's file has them).
     links: {},
     additionalInfo:
       "My first two papers were published under my former name, Jordan Park. I also mentor first-time hackers at university hackathons.",

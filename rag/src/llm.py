@@ -1,4 +1,4 @@
-"""All model calls go through headless Claude Code (`claude -p`). See RAG_SPEC.md, "How we call models".
+"""All model calls go through headless Claude Code (`claude -p`).
 
 No API key is used: calls run on the developer's Claude Code login.
 """

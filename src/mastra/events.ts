@@ -34,7 +34,7 @@ type Extra = {
   hypothesisId?: string | null;
 };
 
-/** Defaults stamped on every event a logger writes (PART 3: verify vs. investigate phase). */
+/** Defaults stamped on every event a logger writes (verify vs. investigate phase). */
 export type LoggerScope = { mode?: AgentMode | null; hypothesisId?: string | null };
 
 /** emit() bound to one applicant and one agent (and optionally a mode / hypothesis). */

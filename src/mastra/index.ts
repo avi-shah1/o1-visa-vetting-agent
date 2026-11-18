@@ -27,7 +27,7 @@ export const mastra = new Mastra({
     reconciler: reconcilerAgent,
     questioner: questionerAgent,
     resolver: resolverAgent,
-    // PART 3 investigate mode
+    // investigate mode
     patents: patentsAgent,
     hypothesisResolver: hypothesisResolverAgent,
     hypothesisDrafter: hypothesisDrafterAgent,

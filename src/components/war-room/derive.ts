@@ -28,7 +28,7 @@ export type AgentView = {
   /** When it reached done/error; cleared if it starts working again. */
   endedAt: number | null;
   eventCount: number;
-  /** PART 3: the phase of the latest event that had one (verify, then investigate). */
+  /** The phase of the latest event that had one (verify, then investigate). */
   mode: AgentMode | null;
 };
 

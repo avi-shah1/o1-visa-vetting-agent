@@ -2,10 +2,9 @@
  * Shared data contract for the whole app.
  *
  * Every piece of data that moves between the intake form, the database, the
- * agents, the UI, and the teammate's scoring agent is defined here with zod.
+ * agents, the UI, and the scorer (src/scorer/index.ts) is defined here with zod.
  *
  * Rules:
- * - Only the main branch (terminal 1) edits this file. Other worktrees merge it in.
  * - The Drizzle tables in src/db/schema.ts reuse the enum arrays below, so the
  *   database and the validation can't drift apart.
  * - Agent output schemas use `.nullable()` (key always present) rather than
@@ -40,7 +39,7 @@ export const DISCREPANCY_TYPES = [
   "evidence",
   "insufficient_proof",
   "criterion_fit",
-  "failure_mode", // PART 3: a sceptic hypothesis the investigation couldn't settle
+  "failure_mode", // a sceptic hypothesis the investigation couldn't settle
 ] as const;
 export const DiscrepancyTypeSchema = z.enum(DISCREPANCY_TYPES);
 export type DiscrepancyType = z.infer<typeof DiscrepancyTypeSchema>;
@@ -55,14 +54,14 @@ export const SourceAgentIdSchema = z.enum(SOURCE_AGENT_IDS);
 export type SourceAgentId = z.infer<typeof SourceAgentIdSchema>;
 
 /**
- * PART 3 investigate mode: the five source agents plus two new ones —
+ * Investigate mode: the five source agents plus two more —
  * `patents` (LLM) and `wages` (code only, no LLM). Each gets its own card.
  */
 export const INVESTIGATOR_IDS = [...SOURCE_AGENT_IDS, "patents", "wages"] as const;
 export const InvestigatorIdSchema = z.enum(INVESTIGATOR_IDS);
 export type InvestigatorId = z.infer<typeof InvestigatorIdSchema>;
 
-/** Which job a source agent is doing: Part 2 claim verification or Part 3 hypothesis investigation. */
+/** Which job a source agent is doing: claim verification or hypothesis investigation. */
 export const AGENT_MODES = ["verify", "investigate"] as const;
 export const AgentModeSchema = z.enum(AGENT_MODES);
 export type AgentMode = z.infer<typeof AgentModeSchema>;
@@ -95,7 +94,7 @@ export const EventTypeSchema = z.enum(EVENT_TYPES);
 export type EventType = z.infer<typeof EventTypeSchema>;
 
 /**
- * Status pill on an agent card. The spec's source-agent states
+ * Status pill on an agent card. The source-agent states
  * (queued/searching/reading/done/error) plus "thinking" for the reasoning
  * agents (reconciler, questioner, resolver, case builder, scorer).
  */
@@ -133,7 +132,7 @@ export const SourceSchema = z.object({
 export type Source = z.infer<typeof SourceSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PART 1 — Intake form
+// Intake form
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const ProfileLinksSchema = z.object({
@@ -327,7 +326,7 @@ export type Claim = z.infer<typeof ClaimSchema>;
 export type ClaimPayload = Claim["payload"];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PART 2 — Vetting
+// Vetting
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** What one source agent found for one claim. */
@@ -356,7 +355,7 @@ const findingFields = z.object({
   reasoning: z.string(),
 });
 
-/** Rule from the spec: only "unverified" may have no sources (so "contradicted" always cites one). */
+/** Rule: only "unverified" may have no sources (so "contradicted" always cites one). */
 const hasSourcesUnlessUnverified = (f: { status: FindingStatus; sources: Source[] }) =>
   f.status === "unverified" || f.sources.length > 0;
 const sourcesRule = {
@@ -391,7 +390,7 @@ export type QuestionerOutput = z.infer<typeof QuestionerOutputSchema>;
 
 export const DiscrepancySchema = QuestionerOutputSchema.extend({
   id: Id,
-  /** PART 3: set when the question comes from a sceptic hypothesis (type "failure_mode"). */
+  /** Set when the question comes from a sceptic hypothesis (type "failure_mode"). */
   hypothesisId: z.string().nullable().default(null),
   resolution: ResolutionSchema, // starts as "open"
   applicantResponse: z.string().nullable(),
@@ -413,9 +412,9 @@ export const ResolverOutputSchema = z.object({
 export type ResolverOutput = z.infer<typeof ResolverOutputSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PART 3 — Investigation mode (PART3_INVESTIGATION_SPEC.md)
+// Investigation mode
 //
-// The sceptic (rag/, RAG_SPEC.md) flags failure modes from past AAO denials.
+// The sceptic (the RAG in rag/) flags failure modes from past AAO denials.
 // Each flagged item carries a Hypothesis: measurable checks plus the
 // conditions that clear or confirm it. The source agents measure; the
 // hypothesis resolver decides.
@@ -437,7 +436,7 @@ export const HYPOTHESIS_METRICS = [
 export const HypothesisMetricSchema = z.enum(HYPOTHESIS_METRICS);
 export type HypothesisMetric = z.infer<typeof HypothesisMetricSchema>;
 
-/** Sceptic queue statuses (RAG_SPEC.md). `does_not_apply` only appears after investigation clears an item. */
+/** Sceptic queue statuses (as in rag/src/schemas.py). `does_not_apply` only appears after investigation clears an item. */
 export const QUEUE_STATUSES = ["applies", "unknown", "does_not_apply"] as const;
 export const QueueStatusSchema = z.enum(QUEUE_STATUSES);
 export type QueueStatus = z.infer<typeof QueueStatusSchema>;
@@ -457,7 +456,7 @@ export type HypothesisCheck = z.infer<typeof HypothesisCheckSchema>;
 export const HypothesisSchema = z.object({
   hypothesisId: Id, // e.g. "hyp_ev4_1"
   evidenceId: Id, // the sceptic's evidence item (our exporter uses the claim id)
-  claimId: Id, // link to the Part 2 claim
+  claimId: Id, // link to the claim
   criterion: CriterionSchema,
   failureMode: z.string(), // "Patent technically impressive but little impact"
   precedent: z.object({ caseId: z.string(), quote: z.string() }),
@@ -497,7 +496,7 @@ export const HypothesisFindingSchema = z.object({
 });
 export type HypothesisFinding = z.infer<typeof HypothesisFindingSchema>;
 
-/** A source agent's job: verify claims (Part 2) or investigate hypotheses (Part 3). */
+/** A source agent's job: verify claims or investigate hypotheses. */
 export const AgentJobSchema = z.discriminatedUnion("mode", [
   z.object({ mode: z.literal("verify"), claims: z.array(ClaimSchema) }),
   z.object({ mode: z.literal("investigate"), hypotheses: z.array(HypothesisSchema) }),
@@ -527,7 +526,7 @@ export const HypothesisRecordSchema = z.object({
 export type HypothesisRecord = z.infer<typeof HypothesisRecordSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PART 3 — Case builder (this is the handoff contract)
+// Case builder (this is the handoff contract)
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const ExhibitSchema = z.object({
@@ -572,7 +571,7 @@ export const CaseRecordSchema = z.object({
 export type CaseRecord = z.infer<typeof CaseRecordSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HANDOFF — teammate's scoring agent
+// HANDOFF — scoring agent (src/scorer/index.ts, see SCORER.md)
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Response of GET /api/cases/[id]/bundle. */
@@ -581,7 +580,7 @@ export const CaseBundleSchema = z.object({
   claims: z.array(ClaimSchema),
   findings: z.array(FindingRecordSchema),
   discrepancies: z.array(DiscrepancySchema),
-  /** PART 3: investigated sceptic failure modes (empty when the sceptic didn't run). */
+  /** Investigated sceptic failure modes (empty when the sceptic didn't run). */
   hypotheses: z.array(HypothesisRecordSchema).default([]),
   case: CaseRecordSchema,
 });
@@ -618,7 +617,7 @@ export const AgentEventSchema = z.object({
   progress: z.number().int().min(0).max(100).nullable(),
   url: z.string().nullable(), // page currently being read
   found: z.string().nullable(), // short result, e.g. "Finalist, not winner"
-  // PART 3. Defaults keep older replay files (recorded before these columns) valid.
+  // Investigation fields. Defaults keep older replay files (recorded before these columns) valid.
   mode: AgentModeSchema.nullable().default(null),
   hypothesisId: z.string().nullable().default(null),
   createdAt: Timestamp,

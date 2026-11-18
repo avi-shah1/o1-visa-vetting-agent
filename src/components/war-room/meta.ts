@@ -10,7 +10,7 @@ import type {
   Resolution,
 } from "@/lib/schemas";
 
-/** Each source gets a small identity dot. `patents` and `wages` only work in investigate mode (PART 3). */
+/** Each source gets a small identity dot. `patents` and `wages` only work in investigate mode. */
 export const SOURCE_AGENTS: Record<InvestigatorId, { name: string; via: string; color: string }> = {
   devpost: { name: "Devpost", via: "Profile + project pages", color: "#0e8aa0" },
   linkedin: { name: "LinkedIn", via: "Apify profile scraper", color: "#3b6fd4" },

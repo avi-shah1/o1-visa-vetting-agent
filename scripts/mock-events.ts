@@ -4,7 +4,7 @@
  * Seeds a fictional demo applicant with 9 claims, then plays ~95 seconds of
  * realistic activity into the `events` table: ~60s of the 5 source agents
  * verifying claims (devpost, linkedin, github, scholar, press), then ~30s of
- * PART 3 investigation (the sceptic's failure modes, measured by the 7
+ * investigation (the sceptic's failure modes, measured by the 7
  * investigators incl. patents and wages, then the hypothesis resolver). Along
  * the way it writes what the real pipeline would: reconciled `findings` (the
  * ledger), `hypotheses` (its failure-mode rows) and one merged list of
@@ -290,7 +290,7 @@ type DiscrepancyStep = {
   claim: ClaimKey;
   hypothesisId?: string;
 } & Omit<QuestionerOutput, "claimId">;
-/** PART 3: one investigated failure mode lands in the ledger. */
+/** Investigation: one investigated failure mode lands in the ledger. */
 type HypothesisStep = {
   at: number;
   kind: "hypothesis";
@@ -566,7 +566,7 @@ function question(at: number, label: string, d: Omit<DiscrepancyStep, "at" | "ki
   steps.push({ at, kind: "discrepancy", ...d });
 }
 
-// ── PART 3: sceptic → investigate → hypothesis resolver ─────────────────────
+// ── Investigation: sceptic → investigate → hypothesis resolver ──────────────
 // The precedent quotes are real (AAO decision FEB142024_01D8101, as quoted by
 // the sceptic RAG); the applicant and the measurements are made up.
 const PRECEDENT = "FEB142024_01D8101";

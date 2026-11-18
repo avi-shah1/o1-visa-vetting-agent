@@ -1,11 +1,11 @@
 /**
- * Offline checks for the PART 3 investigation logic (no API calls, no database):
+ * Offline checks for the investigation logic (no API calls, no database):
  *
  *   npm run test:investigation [path/to/queue.json]
  *
- * Uses a sceptic queue written by rag/src/run.py (default: SCEPTIC_RAG_DIR's
- * out/queue_test_01.json) and covers the spec's resolver rules and acceptance
- * tests with stub measurements.
+ * Uses a sceptic queue written by rag/src/run.py (default:
+ * rag/out/queue_test_01.json, or SCEPTIC_RAG_DIR's) and covers the resolver
+ * rules, merged questions and routing decision with stub measurements.
  */
 import assert from "node:assert/strict";
 import path from "node:path";
@@ -61,7 +61,7 @@ const m = (over: Partial<Measurement> = {}): Measurement => ({
 });
 
 async function main() {
-  // ── Resolver rules (spec §5) ──
+  // ── Resolver rules ──
   await test("1. patent with no impact: a measured zero confirms → applies", () => {
     const { finding } = toHypothesisFinding({ result: "confirmed", reliedOn: [1], reasoning: "0 citing patents 4.2 years after grant.", sharpenedQuestion: null }, hyp(), [m()]);
     assert.equal(finding.result, "confirmed");
@@ -104,7 +104,7 @@ async function main() {
     assert.equal(finding.result, "still_unknown");
   });
 
-  // ── Merged questions (spec §6) ──
+  // ── Merged questions ──
   await test("merged list: sceptic questions on needed criteria first, one per claim, cap 4", () => {
     const issue = (claimId: string, type: "numerical" | "evidence", impact: "high" | "medium" | "low") => ({
       claimId, type, description: "d", question: `q-${claimId}`, requestedDocument: null, impact, impactReason: "",
@@ -201,7 +201,7 @@ async function main() {
   });
 
   // ── The real sceptic queue (rag/out) ──
-  const ragDir = process.env.SCEPTIC_RAG_DIR ?? "../AAA_EF_Hackathon/rag";
+  const ragDir = process.env.SCEPTIC_RAG_DIR ?? "rag";
   const file = process.argv[2] ?? path.join(ragDir, "out", "queue_test_01.json");
   await test(`real queue ${file}: items map to claims and the summary recomputes`, async () => {
     const queue = await readQueue(file);

@@ -1,6 +1,6 @@
 /**
- * PART 3 §6: one follow-up list from two sources —
- *   1. Part 2 discrepancies (the questioner's ranked issues), and
+ * One follow-up list from two sources —
+ *   1. verification discrepancies (the questioner's ranked issues), and
  *   2. sceptic hypotheses still unknown after investigation (their sharpened question).
  *
  * Deduplicated by claim (one question per piece of evidence), ranked:
@@ -28,7 +28,7 @@ export type ScepticQuestion = {
 const CRITERIA_NEEDED = 3;
 
 export function mergeQuestions(input: {
-  issues: RankedIssue[]; // Part 2, already ordered by impact
+  issues: RankedIssue[]; // from the questioner, already ordered by impact
   sceptic: ScepticQuestion[];
   /** Criteria that already count with nothing open (the queue summary's "clear"). */
   clearCriteria: Set<Criterion>;

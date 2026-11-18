@@ -109,13 +109,13 @@ export const discrepancies = sqliteTable(
     resolution: text({ enum: RESOLUTIONS }).notNull().default("open"),
     applicantResponse: text(),
     resolvedAt: text(),
-    hypothesisId: text(), // PART 3: set for sceptic questions (type "failure_mode")
+    hypothesisId: text(), // set for sceptic questions (type "failure_mode")
     createdAt: createdAt(),
   },
   (t) => [index("discrepancies_claim_idx").on(t.claimId)],
 );
 
-/** PART 3: one row per sceptic hypothesis, with what the investigation measured and the resolver's verdict. */
+/** One row per sceptic hypothesis, with what the investigation measured and the resolver's verdict. */
 export const hypotheses = sqliteTable(
   "hypotheses",
   {
@@ -194,7 +194,7 @@ export const events = sqliteTable(
     progress: integer(), // 0–100
     url: text(),
     found: text(),
-    mode: text({ enum: AGENT_MODES }), // PART 3: verify | investigate
+    mode: text({ enum: AGENT_MODES }), // verify | investigate
     hypothesisId: text(),
     createdAt: createdAt(),
   },

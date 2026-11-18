@@ -12,7 +12,7 @@ import type { Criterion } from "@/lib/schemas";
 export type ApplicantRow = typeof applicants.$inferSelect;
 export type HypothesisRow = typeof hypotheses.$inferSelect;
 
-/** PART 3: every investigated sceptic hypothesis for the case, oldest first. */
+/** Every investigated sceptic hypothesis for the case, oldest first. */
 export async function listHypotheses(applicantId: string): Promise<HypothesisRow[]> {
   return db.select().from(hypotheses).where(eq(hypotheses.applicantId, applicantId)).orderBy(asc(hypotheses.createdAt), sql`rowid`);
 }

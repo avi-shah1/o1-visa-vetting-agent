@@ -49,7 +49,7 @@ export type CaseSnapshot = {
   /** Latest finding per claim. */
   findings: FindingRecord[];
   discrepancies: Discrepancy[];
-  /** PART 3: investigated sceptic failure modes. */
+  /** Investigated sceptic failure modes. */
   hypotheses: HypothesisRecord[];
   /** Latest built case (dossier) for this applicant, if any. */
   case: CaseRecord | null;
@@ -68,7 +68,7 @@ export const ReplayFileSchema = z.object({
   /** Every finding ever written (not just the latest), so the ledger evolves as it did live. */
   findings: z.array(FindingRecordSchema),
   discrepancies: z.array(DiscrepancySchema),
-  /** PART 3 (absent in older recordings). */
+  /** Investigated failure modes (absent in older recordings). */
   hypotheses: z.array(HypothesisRecordSchema).default([]),
   cases: z.array(CaseRecordSchema),
   scores: z.array(ScoreSchema),

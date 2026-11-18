@@ -1,19 +1,19 @@
 /**
- * The bridge to the sceptic RAG (rag/ on the feature/rag-development branch,
- * RAG_SPEC.md): applicant JSON in, queue out.
+ * The bridge to the sceptic RAG (the Python pipeline in rag/): applicant JSON
+ * in, queue out.
  *
  * 1. toScepticApplicant(): our applicant + verified claims → the RAG's
  *    Applicant JSON. Each claim becomes one evidence item whose id IS the
  *    claim id, so the queue's evidence_id links straight back to the claim.
- *    Contradicted claims are left out (PART 3 §1).
+ *    Contradicted claims are left out.
  * 2. runSceptic(): runs `python src/run.py <file>` in the RAG folder and reads
  *    out/queue_<applicant_id>.json. Configure with:
  *      SCEPTIC_RAG_DIR   path to the rag/ folder (default: ./rag when it exists)
  *      SCEPTIC_PYTHON    interpreter (default <rag>/.venv/bin/python, else python3)
  *      SCEPTIC_MODE      run (default) | reuse (use an existing queue file if there is one) | off
  * 3. queueItems(): the queue → one entry per flagged item, with its criterion
- *    mapped to ours, its claim id, and the judge's Hypothesis if it has one
- *    (PART 3 §2). Items without one are drafted by the workflow.
+ *    mapped to ours, its claim id, and the judge's Hypothesis if it has one.
+ *    Items without one are drafted by the workflow.
  * 4. investigatedQueue(): the queue with statuses updated after investigation
  *    and the summary recomputed (same rules as rag/src/run.py summarise()).
  *
@@ -90,7 +90,7 @@ export const ScepticQueueItemSchema = z.object({
   reasoning: z.string(),
   precedent: z.object({ case_id: z.string(), quote: z.string() }),
   question_for_applicant: z.string().nullable().optional(),
-  /** PART 3 §2: the judge's measurable checks. Optional until rag/src/judge.py emits it. */
+  /** The judge's measurable checks. Optional until rag/src/judge.py emits it. */
   hypothesis: z.unknown().optional(),
 });
 export type ScepticQueueItem = z.infer<typeof ScepticQueueItemSchema>;
@@ -165,7 +165,7 @@ export type ScepticConfig = { ragDir: string; python: string; mode: "run" | "reu
 export function scepticConfig(): ScepticConfig {
   const mode = (process.env.SCEPTIC_MODE ?? "run").trim().toLowerCase();
   if (mode === "off") return { mode: "off", reason: "SCEPTIC_MODE is off" };
-  // Default: the rag/ folder in this repo (it lives next to src/ on feature/rag-development).
+  // Default: the rag/ folder in this repo, next to src/.
   const dir = process.env.SCEPTIC_RAG_DIR?.trim() || (existsSync(path.join(projectRoot(), "rag", "src", "run.py")) ? "rag" : "");
   if (!dir) return { mode: "off", reason: "no rag/ folder and SCEPTIC_RAG_DIR is not set" };
   const ragDir = path.resolve(projectRoot(), dir);
@@ -239,7 +239,7 @@ export type QueuedItem = {
   claimId: string;
   criterion: Criterion;
   item: ScepticQueueItem;
-  /** The judge's Hypothesis (PART 3 §2), when the queue has one and it is valid. */
+  /** The judge's Hypothesis, when the queue has one and it is valid. */
   hypothesis: Hypothesis | null;
 };
 

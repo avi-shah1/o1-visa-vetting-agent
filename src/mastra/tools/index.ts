@@ -22,7 +22,7 @@ export const tools = {
   openAlexWorks,
   devpostFetch,
   logEvent,
-  // PART 3 investigate mode
+  // investigate mode
   openAlexWork,
   patentCitations,
   npmDownloads,

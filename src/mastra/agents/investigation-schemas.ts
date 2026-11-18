@@ -1,7 +1,7 @@
 /**
- * PART 3: what the investigate-mode models fill in (structured output), and
+ * What the investigate-mode models fill in (structured output), and
  * the code that turns their answers into the shared contract, enforcing the
- * spec's rules (§5) in code like the Part 2 reconciler:
+ * hard rules in code, like the reconciler does:
  *   - measurements only for known checks, with real URLs from tool results
  *   - measurements with identityConfidence < 0.7 are ignored
  *   - cleared / confirmed need a relied-on measurement with a source and a value
@@ -155,7 +155,7 @@ export function toHypothesisFinding(
 }
 
 /**
- * Queue status after investigation (spec §5 table, made laxer): only a
+ * Queue status after investigation (lax by design): only a
  * confirmed failure mode stays `applies`. A sceptic `applies` the
  * investigation could neither confirm nor clear becomes `unknown` (a question
  * for the applicant), not a rejection: being lax is safer.

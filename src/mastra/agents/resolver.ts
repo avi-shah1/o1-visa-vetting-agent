@@ -1,5 +1,5 @@
 /**
- * Resolver agent (spec PART 2c): reads the applicant's reply to one follow-up
+ * Resolver agent: reads the applicant's reply to one follow-up
  * question and classifies how it settles the discrepancy.
  *
  * Output shape: ResolverOutputSchema in src/lib/schemas.ts.

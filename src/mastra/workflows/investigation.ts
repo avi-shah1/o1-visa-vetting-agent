@@ -1,5 +1,5 @@
 /**
- * PART 3 investigation: sceptic queue items → Hypotheses → Measurements →
+ * Investigation: sceptic queue items → Hypotheses → Measurements →
  * HypothesisFindings. Used by the o1Pipeline steps and by the recheck after
  * follow-up (src/lib/followup.ts), so it takes everything it needs as
  * arguments.
@@ -302,7 +302,7 @@ export async function investigateWith(
 
 // ─── 3. Decide ───────────────────────────────────────────────────────────────
 
-/** The hypothesis resolver on one hypothesis and all its measurements, with the spec's rules enforced in code. */
+/** The hypothesis resolver on one hypothesis and all its measurements, with its hard rules enforced in code. */
 export async function resolveHypothesis(
   mastra: Mastra,
   applicant: Applicant,

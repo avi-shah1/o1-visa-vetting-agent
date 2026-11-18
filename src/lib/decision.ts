@@ -1,5 +1,5 @@
 /**
- * The final routing decision (PART 3 §1, "buildCase → route"): after
+ * The final routing decision (made when the case is built): after
  * verification, the sceptic and the investigation, does the case go to a
  * lawyer or does the applicant need more evidence?
  *

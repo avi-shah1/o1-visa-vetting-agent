@@ -1,6 +1,6 @@
 /**
  * TEST FIXTURE: creates a case with open follow-up questions, so the follow-up
- * chat can be tried before the vetting agents (agents branch) exist.
+ * chat can be tried without running the (paid) vetting agents.
  *
  * Uses the demo applicant (demo/applicant.local.json, or the placeholder) and
  * adds an "unverified" finding + one open discrepancy for up to 3 claims. The
@@ -13,7 +13,7 @@ import { buildClaims } from "@/lib/claims";
 import { loadDemoSubmission } from "@/lib/demo-source";
 import type { Criterion, DiscrepancyType } from "@/lib/schemas";
 
-/** Which claims get a question first (the spec's scripted three come first). */
+/** Which claims get a question first (the real demo's three scripted discrepancies — press, scholarly, awards — come first). */
 const PRIORITY: Criterion[] = ["press", "scholarly", "awards", "membership", "contributions", "critical_role", "judging", "remuneration"];
 
 const TEMPLATES: Record<Criterion, { type: DiscrepancyType; description: string; question: string; requestedDocument: string }> = {

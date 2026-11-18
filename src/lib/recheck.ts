@@ -1,5 +1,5 @@
 /**
- * PART 3 §6 recheck, after the applicant answers a sceptic question
+ * Recheck after the applicant answers a sceptic question
  * (a discrepancy of type "failure_mode", linked to a hypothesis).
  *
  * - The reply is always recorded on the hypothesis.
@@ -8,9 +8,8 @@
  *   catch-all, which can read any link), with the reply and links as context,
  *   then the hypothesis resolver decides again with old + new measurements.
  *
- * Not done here yet: re-running the sceptic judge for the one evidence item
- * (the spec's other recheck step). rag/src/run.py has no single-item mode;
- * once it does, call it from here.
+ * Not done here yet: re-running the sceptic judge for the one evidence item.
+ * rag/src/run.py has no single-item mode; once it does, call it from here.
  *
  * Runs in the background (after the reply is saved) and never throws.
  */

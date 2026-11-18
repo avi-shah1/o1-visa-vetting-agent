@@ -1,5 +1,5 @@
 /**
- * PART 3: prevailing-wage benchmark, from a preloaded table (no live API).
+ * Investigate mode: prevailing-wage benchmark, from a preloaded table (no live API).
  *
  * src/data/wage-benchmarks.json holds DOL OFLC prevailing wages (Levels 1–4,
  * wage year July 2026 – June 2027) for common tech/science occupations in the

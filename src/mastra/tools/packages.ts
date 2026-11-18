@@ -1,5 +1,5 @@
 /**
- * PART 3: package adoption — monthly downloads from the npm downloads API and
+ * Investigate mode: package adoption — monthly downloads from the npm downloads API and
  * pypistats.org. No keys needed.
  */
 import { createTool } from "@mastra/core/tools";

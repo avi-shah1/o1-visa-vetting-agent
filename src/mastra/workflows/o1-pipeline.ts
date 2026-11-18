@@ -1,10 +1,10 @@
 /**
- * o1Pipeline (PART3_INVESTIGATION_SPEC.md §1):
+ * o1Pipeline:
  *
  *   load claims
- *   → 5 source agents in parallel, mode "verify"        (Part 2)
+ *   → 5 source agents in parallel, mode "verify"
  *   → reconciler                                         → Finding per claim
- *   → sceptic (rag/, RAG_SPEC.md) on claims not contradicted → queue + Hypotheses
+ *   → sceptic RAG (rag/) on claims not contradicted      → queue + Hypotheses
  *   → 7 investigators in parallel, mode "investigate"    → Measurements
  *   → hypothesis resolver                                → cleared / confirmed / still_unknown
  *   → merged questions (discrepancies + still-unknown hypotheses, top 4)
@@ -16,7 +16,7 @@
  * Every step logs war-room events. A failing agent logs an error and returns
  * nothing instead of failing the run. If the sceptic isn't configured
  * (SCEPTIC_RAG_DIR) or fails, the investigate phase is skipped and the run is
- * exactly Part 2. Saving replaces earlier results, so the pipeline can be re-run.
+ * verification and questions only. Saving replaces earlier results, so the pipeline can be re-run.
  */
 import { RequestContext } from "@mastra/core/request-context";
 import { createStep, createWorkflow } from "@mastra/core/workflows";
@@ -160,7 +160,7 @@ const loadStep = createStep({
   },
 });
 
-// ─── Verify (Part 2) ─────────────────────────────────────────────────────────
+// ─── Verify ──────────────────────────────────────────────────────────────────
 
 const SourceStepOutput = z.object({
   agentId: SourceAgentIdSchema,
@@ -359,7 +359,7 @@ const scepticStep = createStep({
       await log("status", `Done: ${summary}`, { status: "done", progress: 100, currentAction: "Done", found: summary });
       return { hypotheses, queue, queueFile: file, evidenceIds: evidenceIdsByCriterion(input) };
     } catch (err) {
-      // The investigation is extra: without the sceptic the run is still a complete Part 2 run.
+      // The investigation is extra: without the sceptic the run is still a complete verification run.
       const message = errorMessage(err);
       await log("status", `Failed: ${truncate(message, 300)}`, { status: "error", progress: 100, found: truncate(message) });
       return none;

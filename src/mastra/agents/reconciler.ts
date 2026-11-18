@@ -1,5 +1,5 @@
 /**
- * Reconciler (PART 2 UPDATE): merges every source agent's findings into one
+ * Reconciler: merges every source agent's findings into one
  * Finding per claim. The workflow enforces the hard rules in code afterwards
  * (see toFindings in ./output-schemas.ts).
  */

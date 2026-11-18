@@ -1,7 +1,7 @@
 /**
  * Template case builder used by "Build case" (POST /api/cases/[id]/build) until
  * the real Mastra caseBuilder agent (Opus) exists. Deterministic, no LLM, but it
- * follows the spec rules: corroborated or applicant-substantiated evidence (plus partially
+ * follows these rules: corroborated or applicant-substantiated evidence (plus partially
  * verified claims, capped at moderate and flagged)
  * is argued, the strongest 3–5 criteria are picked, everything else is listed
  * with a reason, and nothing is invented beyond what the findings say.

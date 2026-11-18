@@ -1,5 +1,5 @@
 /**
- * The five parallel research agents (PART 2 UPDATE), one per source. Each gets
+ * The five parallel research agents, one per source. Each gets
  * the applicant's identity and ALL claims, decides which claims its source can
  * check, and returns SourceAgentOutput ({ sourceFindings }).
  *
@@ -21,7 +21,7 @@ import {
 
 export const SOURCE_AGENT_MODEL = "anthropic/claude-haiku-5-5";
 
-/** What each criterion needs, from the spec. Shared with the reconciler. */
+/** What each criterion needs. Shared with the reconciler. */
 export const CRITERION_CHECKLIST = `Per-criterion checklist:
 - awards: the award exists · the applicant is listed as a recipient (not a finalist, honorable mention or sponsor bounty) · scale/selectivity (how many entrants) · credibility of the issuer
 - membership: the applicant is a member (not just an applicant or finalist) · admission is based on achievement, not payment

@@ -1,6 +1,6 @@
 /**
  * GET /api/cases/[id]/hypotheses
- * [id] = applicant ID. PART 3: every sceptic failure mode that was investigated,
+ * [id] = applicant ID. Every sceptic failure mode that was investigated,
  * with its precedent, the measurements (with sources) and the resolver's
  * verdict (cleared / confirmed / still_unknown), oldest first.
  */

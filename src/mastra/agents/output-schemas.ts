@@ -4,7 +4,7 @@
  *
  * The model-facing schemas skip `format: uri` and min/max constraints, which
  * structured-output APIs handle unevenly. The sanitizers below enforce those
- * rules in code instead, along with the spec's hard rules:
+ * rules in code instead, along with the hard rules:
  *   - only "unverified" may have no sources (so "contradicted" always cites one)
  *   - sources must be real URLs from tool results
  *   - every claim gets exactly one Finding
@@ -107,7 +107,7 @@ export function toSourceFindings(
   });
 }
 
-/** The reconciler's answer → exactly one valid Finding per claim, with the spec's rules enforced. */
+/** The reconciler's answer → exactly one valid Finding per claim, with those rules enforced. */
 export function toFindings(raw: z.infer<typeof ReconcilerModelOutput> | undefined, claimIds: string[]): Finding[] {
   const byClaim = new Map<string, Finding>();
   for (const f of raw?.findings ?? []) {

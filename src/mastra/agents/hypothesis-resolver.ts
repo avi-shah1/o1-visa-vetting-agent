@@ -1,5 +1,5 @@
 /**
- * Hypothesis resolver (PART 3 §5). Mirrors the Part 2 reconciler: it reads one
+ * Hypothesis resolver. Mirrors the reconciler: it reads one
  * Hypothesis plus every Measurement for it and decides cleared / confirmed /
  * still_unknown. The hard rules are enforced in code afterwards (see
  * toHypothesisFinding in ./investigation-schemas.ts).

@@ -1,7 +1,7 @@
 /**
  * Fallback for sceptic queues that don't carry Hypotheses yet.
  *
- * PART 3 §2 says the sceptic's judge (rag/src/judge.py) should output a
+ * Ideally the sceptic's judge (rag/src/judge.py) would output a
  * Hypothesis for every `applies` / `unknown` queue item. Until it does, this
  * agent drafts one from the queue item, the precedent and the claim, using the
  * same rules. Hypotheses it drafts are stored with origin "drafted", so they

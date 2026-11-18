@@ -54,3 +54,6 @@ next-env.d.ts
 
 # real demo applicant data (a real person's details — never commit; this repo is public)
 /demo/*.local.json
+# replays recorded from real cases (npm run replay:save); only the fictional demo replay is tracked
+/replays/*.json
+!/replays/demo.json

@@ -1,5 +1,5 @@
 /**
- * Questioner (PART 2b): for every finding that isn't corroborated, classify the
+ * Questioner: for every finding that isn't corroborated, classify the
  * discrepancy and draft one neutral follow-up question, then rank them by
  * impact on the case. The workflow asks only the top few; the rest are kept as
  * notes on their findings.

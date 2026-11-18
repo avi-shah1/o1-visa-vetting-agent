@@ -98,7 +98,7 @@ export function EvidenceLedger({
   );
 }
 
-/** PART 3: the sceptic's failure modes for one criterion, with what the investigation measured. */
+/** The sceptic's failure modes for one criterion, with what the investigation measured. */
 function FailureModes({ items, now }: { items: HypothesisRecord[]; now: number }) {
   return (
     <div className="border-l-2 border-dashed border-[color:var(--line)] pl-3">

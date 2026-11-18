@@ -1,6 +1,6 @@
 /**
  * A small JSON file cache for tool results, keyed by input (query, URL, ID), so
- * rehearsal runs are instant (PART 3 §4). One file per tool under
+ * rehearsal runs are instant. One file per tool under
  * .cache/tools/. Delete the folder to refetch everything.
  *
  * Only successful results are cached; errors always retry.

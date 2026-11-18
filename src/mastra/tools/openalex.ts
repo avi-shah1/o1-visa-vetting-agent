@@ -213,7 +213,7 @@ function workKey(input: string): string {
 }
 
 /**
- * PART 3: one paper's citation count plus OpenAlex's field-normalised impact.
+ * Investigate mode: one paper's citation count plus OpenAlex's field-normalised impact.
  * The normalised percentile (citations vs. papers of the same field, type and
  * year) is the benchmark the resolver should use instead of the raw count.
  */
