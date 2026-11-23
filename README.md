@@ -1,6 +1,6 @@
 # O-1A Visa Vetting Agent
 
-**🥉 Bronze Medal | [Anything Applied Agentic Hackathon](https://luma.com/gap48i1m)**  
+**🥉 Third Place | [Anything Applied Agentic Hackathon](https://luma.com/gap48i1m)**  
 San Francisco · 7 November 2026
 
 **🎥 [Watch our original hackathon submission demo](https://www.loom.com/share/c5d85f5988e8424caace7a379dfa6ac8)**
