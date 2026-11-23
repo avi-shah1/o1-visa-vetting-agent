@@ -1,14 +1,12 @@
 # O-1A Visa Vetting Agent
 
-[![CI](https://github.com/avi-shah1/o1-visa-vetting-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/avi-shah1/o1-visa-vetting-agent/actions/workflows/ci.yml)
-
 **🥉 Third Place | [Anything Applied Agentic Hackathon](https://luma.com/gap48i1m)** · San Francisco · 7 November 2026
 
 **🎥 [Watch the hackathon demo](https://www.loom.com/share/c5d85f5988e8424caace7a379dfa6ac8)** (the original submission, recorded under a tight deadline, so a little rough)
 
 An experimental multi-agent system that helps immigration teams vet an O-1A visa applicant. The applicant fills in a structured intake form covering the eight O-1A evidentiary criteria. Research agents then cross-check each claim against public sources, flag inconsistencies and gaps, ask targeted follow-up questions, and assemble a source-linked dossier for attorney review.
 
-![The war-room dashboard, showing the research agents, evidence ledger and follow-up questions](docs/img/war-room.png)
+Live demo: https://o1-visa-vetting-agent.vercel.app/case/demo?replay=1
 
 ## What it does
 
@@ -40,42 +38,6 @@ Applicant intake
 ```
 
 Agents are orchestrated with [Mastra](https://mastra.ai), and Zod schemas define each hand-off. Progress streams to a live "war room" dashboard. The dossier is built from a deterministic template, not free-form generation.
-
-## Try it without any keys
-
-The repo includes a recorded run for a fictional applicant, so you can see the whole flow without API keys or a database:
-
-```bash
-npm install
-npm run dev
-```
-
-Then open <http://localhost:3000/case/demo?replay=1>. Add `&speed=4` to play it faster. The "View dossier" button opens the printable dossier for the same case.
-
-## Run it for real
-
-Use a Node.js version that Next.js 16 supports.
-
-```bash
-npm install
-cp .env.example .env.local      # PowerShell: Copy-Item .env.example .env.local
-npm run db:push                 # creates the local SQLite database
-npm run dev
-```
-
-Open <http://localhost:3000> to fill in the intake form.
-
-Live research needs these keys in `.env.local`: `ANTHROPIC_API_KEY`, `EXA_API_KEY`, `APIFY_TOKEN`, `APIFY_LINKEDIN_ACTOR_ID` and `OPENALEX_MAILTO`. [`.env.example`](.env.example) lists these and the optional ones. These calls cost money, so a full run on a real applicant is not free.
-
-To explore without paid calls, `npm run seed:followup` creates a test case with findings and open questions.
-
-The precedent check needs Python and a logged-in Claude Code CLI. Without it, that stage is skipped. Setup is in [`rag/README.md`](rag/README.md).
-
-Checks: `npm run typecheck`, `npm run lint`, `npm run test:investigation` and `npm run build`. CI runs all four.
-
-## Public demo mode
-
-Setting `DEMO_MODE=1` turns the app into a read-only demo. Every page redirects to the recorded replay and `/api/*` returns 403, so a public deployment cannot start agent runs or spend API credits. This is how a hosted copy is meant to be deployed (for example on Vercel, with `DEMO_MODE=1` as an environment variable and no API keys). The logic is in [`src/proxy.ts`](src/proxy.ts).
 
 ## Tech stack
 
