@@ -5,9 +5,10 @@ import { notFound } from "next/navigation";
 import { PrintButton } from "@/components/print-button";
 import { CaseBundleError, loadCaseBundle } from "@/lib/case-bundle";
 import { getLatestCaseAndScore } from "@/lib/case-data";
+import { bundleFromReplay, loadReplay } from "@/lib/replay";
 import { decide } from "@/lib/decision";
 import { CRITERION_LABELS, RESOLUTION_LABELS } from "@/lib/labels";
-import type { CaseBundle, FindingStatus, HypothesisResult } from "@/lib/schemas";
+import type { CaseBundle, FindingStatus, HypothesisResult, Score } from "@/lib/schemas";
 
 export const metadata: Metadata = { title: "O-1A case dossier" };
 
@@ -64,10 +65,22 @@ function Section({ n, title, children }: { n: number; title: string; children: R
 
 export default async function DossierPage(props: PageProps<"/case/[id]/dossier">) {
   const { id } = await props.params;
+  // ?replay=1 renders the dossier from replays/<id>.json instead of the database (the public demo).
+  const isReplay = (await props.searchParams).replay === "1";
+  const caseHref = `/case/${id}${isReplay ? "?replay=1" : ""}`;
 
   let bundle: CaseBundle;
+  let replayScore: Score | null = null;
   try {
-    bundle = await loadCaseBundle(id);
+    if (isReplay) {
+      const replay = await loadReplay(id);
+      const built = replay.ok ? bundleFromReplay(replay.file) : null;
+      if (!built) notFound();
+      bundle = built.bundle;
+      replayScore = built.score;
+    } else {
+      bundle = await loadCaseBundle(id);
+    }
   } catch (err) {
     if (err instanceof CaseBundleError && err.status === 404) notFound();
     if (err instanceof CaseBundleError) {
@@ -76,7 +89,7 @@ export default async function DossierPage(props: PageProps<"/case/[id]/dossier">
           <div className="mx-auto max-w-xl">
             <h1 className="text-xl font-semibold">The dossier isn&apos;t ready yet</h1>
             <p className="mt-2 text-neutral-600">{err.message}</p>
-            <Link href={`/case/${id}`} className="mt-5 inline-block text-sm font-medium underline">
+            <Link href={caseHref} className="mt-5 inline-block text-sm font-medium underline">
               Back to the case
             </Link>
           </div>
@@ -89,7 +102,7 @@ export default async function DossierPage(props: PageProps<"/case/[id]/dossier">
   const { applicant, claims, findings, discrepancies, hypotheses, case: caseRow } = bundle;
   const c = caseRow.caseJson;
   // The dossier is the last step: it reports the scorer's result and the routing decision.
-  const { score } = await getLatestCaseAndScore(id);
+  const score = isReplay ? replayScore : (await getLatestCaseAndScore(id)).score;
   const decision = decide({ claims, findings, hypotheses });
   let sectionNo = 0;
   const n = () => ++sectionNo;
@@ -106,7 +119,7 @@ export default async function DossierPage(props: PageProps<"/case/[id]/dossier">
     <div style={LIGHT} className="min-h-screen bg-white text-neutral-900">
       <div className="border-b border-neutral-200 print:hidden">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
-          <Link href={`/case/${id}`} className="text-sm text-neutral-600 hover:text-neutral-900">
+          <Link href={caseHref} className="text-sm text-neutral-600 hover:text-neutral-900">
             ← Back to the case
           </Link>
           <PrintButton />

@@ -300,7 +300,9 @@ export function WarRoom({ caseId, replay, speed = 1 }: { caseId: string; replay?
             bundleHref={isReplay ? null : `/api/cases/${encodeURIComponent(caseId)}/bundle?download=1`}
             // The lawyer's PDF is the last step: offered once the case has been through the scorer.
             documentHref={
-              isReplay || (!score && AGENT_STATUS_STYLE[views.scorer.status].active) ? null : `/case/${encodeURIComponent(caseId)}/dossier`
+              !score && AGENT_STATUS_STYLE[views.scorer.status].active
+                ? null
+                : `/case/${encodeURIComponent(caseId)}/dossier${isReplay ? "?replay=1" : ""}`
             }
             now={now}
           />

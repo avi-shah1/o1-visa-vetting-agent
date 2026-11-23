@@ -31,6 +31,9 @@ export const WarRoomApplicantSchema = z.object({
   field: z.string(),
   currentRole: z.string(),
   currentOrganization: z.string(),
+  /** Only needed by the printable dossier when it is rendered from a replay. */
+  usWorkPlan: z.string().optional(),
+  links: z.record(z.string(), z.string()).optional(),
   createdAt: z.string(),
 });
 export type WarRoomApplicant = z.infer<typeof WarRoomApplicantSchema>;
