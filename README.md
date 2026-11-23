@@ -6,7 +6,7 @@
 
 An experimental multi-agent system that helps immigration teams vet an O-1A visa applicant. The applicant fills in a structured intake form covering the eight O-1A evidentiary criteria. Research agents then cross-check each claim against public sources, flag inconsistencies and gaps, ask targeted follow-up questions, and assemble a source-linked dossier for attorney review.
 
-Live demo: https://o1-visa-vetting-agent.vercel.app/case/demo?replay=1
+Live demo: [O-1A Visa Vetting Agent](https://o1-visa-vetting-agent.vercel.app/case/demo?replay=1)
 
 ## What it does
 
