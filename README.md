@@ -55,13 +55,6 @@ Research agents are orchestrated with **Mastra**, with **Zod** schemas used for 
 | Data | SQLite/libSQL, Drizzle ORM |
 | Output | Printable case dossier, deterministic scoring |
 
-## Run locally
-
-Use a Node.js version compatible with Next.js 16.
-
-Open `http://localhost:3000` for the intake application or `http://localhost:3000/case/demo?replay=1` for the replay.
-
-**For live research:** Add `ANTHROPIC_API_KEY`, `EXA_API_KEY`, `APIFY_TOKEN` and `APIFY_LINKEDIN_ACTOR_ID` to `.env.local`, alongside other relevant options in `.env.example`.
 
 ## Repository structure
 
