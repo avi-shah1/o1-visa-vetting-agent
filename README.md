@@ -63,6 +63,3 @@ Agents are orchestrated with [Mastra](https://mastra.ai), and Zod schemas define
 | `rag/` | AAO precedent retrieval ([details](rag/README.md)) |
 | `replays/demo.json` | Recorded run for a fictional applicant |
 
-## Limitations
-
-This is a hackathon project, not legal advice and not a prediction of what USCIS will decide. Source agents can match the wrong person or miss evidence, the scorer is a set of hand-set rules, and the precedent corpus is a small, denial-heavy sample of AAO decisions. Everything it produces is meant to be reviewed by an attorney.
