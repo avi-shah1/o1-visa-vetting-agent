@@ -1,0 +1,5 @@
+# Only needed to rebuild the decision corpus (stages 0-1). Running the sceptic needs just requirements.txt.
+-r requirements.txt
+requests
+pdfplumber
+pytesseract   # also needs the Tesseract OCR binary on your PATH

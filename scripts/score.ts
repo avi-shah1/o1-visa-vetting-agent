@@ -50,7 +50,7 @@ async function main() {
     console.log(`  ${s.reasoning}`);
   } else if (result.status === "awaiting") {
     console.log("· scoreCase() returned null — nothing saved; the dashboard shows “Awaiting score”.");
-    console.log("  Implement the scorer in src/scorer/index.ts (see SCORER.md).");
+    console.log("  The scorer in src/scorer/index.ts returned null (see docs/scoring.md).");
   } else {
     console.error(`✗ ${result.message}`);
     process.exitCode = 1;

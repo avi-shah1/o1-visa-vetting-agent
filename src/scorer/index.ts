@@ -1,6 +1,6 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- *  SCORING AGENT — the one file the scorer owner edits.  See SCORER.md.
+ *  SCORER — turns a built case into approval likelihood and RFE risk.  See docs/scoring.md.
  * ═══════════════════════════════════════════════════════════════════════════
  *
  * Called after "Build case" (and by `npm run score <applicantId>`) with the

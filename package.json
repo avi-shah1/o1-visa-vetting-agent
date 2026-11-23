@@ -2,6 +2,7 @@
   "name": "o1-visa-vetting-agent",
   "version": "0.1.0",
   "private": true,
+  "description": "Multi-agent vetting of O-1A visa evidence, with source-linked dossiers for attorney review",
   "scripts": {
     "dev": "next dev",
     "dev:ui": "next dev -p 3001",

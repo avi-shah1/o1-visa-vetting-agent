@@ -571,7 +571,7 @@ export const CaseRecordSchema = z.object({
 export type CaseRecord = z.infer<typeof CaseRecordSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HANDOFF — scoring agent (src/scorer/index.ts, see SCORER.md)
+// Scoring input and output (src/scorer/index.ts, see docs/scoring.md)
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Response of GET /api/cases/[id]/bundle. */
